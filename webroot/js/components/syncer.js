@@ -44,11 +44,11 @@ export default class Syncer{
             const now = new Date().getTime() + this.clockSkewMs; //Server now
             const latency = (now - segmentTime) / 1000;
 
-            if (Math.abs(latency-expectedLatency)<0.1 || expectedLatency==0){
+            if (Math.abs(latency-expectedLatency)<0.05 || expectedLatency==0){
                 console.log("Current latency is",latency,", expected latency is",expectedLatency,", no need to sync")
                 return;
             }else{
-                // + 0.1: It seems that the action of setting currentTime takes a little bit of time
+                // + 0.1: It seems that the action of setting currentTime takes a little bit of time.
                 let targetPlayTime = this.player.currentTime() + (latency - expectedLatency) + 0.1;
                 if (targetPlayTime < 0) {
                     targetPlayTime = 0;
